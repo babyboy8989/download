@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.dreamwin.cclib.arch.exception.ArchException;
+import com.dreamwin.cclib.arch.parse.Arch;
 import com.dreamwin.cclib.db.sober.SoberException;
 import com.dreamwin.cclib.util.ConfigUtil;
 import com.dreamwin.download.conf.Config;
@@ -14,6 +16,7 @@ import com.dreamwin.download.db.DB;
 import com.dreamwin.download.db.SoberFactory;
 import com.dreamwin.download.db.dao.TaskDao;
 import com.dreamwin.download.orm.Task;
+import com.dreamwin.download.services.manager.DownloadManager;
 
 /**
  * The system start interface.
@@ -40,7 +43,15 @@ public class StartUp extends HttpServlet {
 			System.exit(1);
 		}
 
-		// 3.重置任务务，容错
+		// 3.初始Arch
+		try {
+			Arch.scanForm("com.dreamwin.download.form");
+		} catch (ArchException e) {
+			LOGGER.error("Arch scan form fail, Exit!");
+			System.exit(1);
+		}
+
+		// 4.重置任务务，容错
 		try {
 			TaskDao.resetStatus(Task.STATUS_WORKING, Task.STATUS_READY);
 		} catch (SoberException e) {
@@ -48,11 +59,11 @@ public class StartUp extends HttpServlet {
 			System.exit(1);
 		}
 
-		// 4.启动下载处理队列
-	}
+		// 5.启动下载处理队列
+		DownloadManager manager = new DownloadManager();
+		manager.start();
 
-	public void destroy() {
-		// TODO Auto-generated method stub
+		// 6.可以启动其他功能，如配置动态刷新。
 	}
 
 }
