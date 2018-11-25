@@ -21,4 +21,16 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
+	<servlet>
+		<description>The servlet dispatcher</description>
+		<display-name>ServletDispatcher</display-name>
+		<servlet-name>ServletDispatcher</servlet-name>
+		<servlet-class>com.dreamwin.cclib.naga.core.ServletDispatcher</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServletDispatcher</servlet-name>
+		<url-pattern>/servlet/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

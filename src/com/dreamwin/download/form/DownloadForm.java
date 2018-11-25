@@ -10,7 +10,21 @@ public class DownloadForm {
 	private String md5;
 
 	public boolean isValid() {
-		// 实现参数校验，如url格式、目标地址权限、md5格式、参数长度等。
+		// 实现参数校验
+		String tmp = src.toLowerCase();
+		// 如：限制url为http请求
+		if (!tmp.startsWith("http://")) {
+			return false;
+		}
+		// 如：限制src长度
+		if (tmp.length() > 500) {
+			return false;
+		}
+		// 如：md5长度校验
+		if (md5.length() != 32) {
+			return false;
+		}
+
 		return true;
 	}
 
