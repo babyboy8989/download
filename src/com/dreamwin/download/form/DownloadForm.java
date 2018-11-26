@@ -1,6 +1,7 @@
 package com.dreamwin.download.form;
 
 import com.dreamwin.cclib.arch.Form;
+import com.dreamwin.download.util.StringUtil;
 
 @Form
 public class DownloadForm {
@@ -10,6 +11,10 @@ public class DownloadForm {
 	private String md5;
 
 	public boolean isValid() {
+		if (StringUtil.isBlank(src) || StringUtil.isBlank(dst) || StringUtil.isBlank(md5)) {
+			return false;
+		}
+		
 		// 实现参数校验
 		String tmp = src.toLowerCase();
 		// 如：限制url为http请求

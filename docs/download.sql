@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS `task` (
 	`dst` VARCHAR(500) NOT NULL,
 	`md5` VARCHAR(32) NOT NULL,
 	`status` INT NOT NULL DEFAULT 0,
-	`create_time` NOT NULL,
-	`finish_time` DEFAULT NULL,
+	`create_time` DATETIME NOT NULL,
+	`finish_time` DATETIME DEFAULT NULL,
 	`retry_count` INT NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
